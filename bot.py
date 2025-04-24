@@ -11,7 +11,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 #Настройки
 DATA_FILE = 'db.json'
 PHOTO_DIR = 'photos'
-ALLOWED_USERS = [111]
+ALLOWED_USERS = [379415631,111]
 
 
 #Состояние диалога
