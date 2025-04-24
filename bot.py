@@ -15,7 +15,7 @@ PHOTO_DIR = 'photos'
 ALLOWED_USERS = []
 for key, value in os.environ.items():
     if key.startswith("USER_"):
-        allowed_users.append(key.split("_")[1])
+        ALLOWED_USERS.append(key.split("_")[1])
 
 
 #Состояние диалога
