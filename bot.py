@@ -12,7 +12,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 DATA_FILE = 'db.json'
 PHOTO_DIR = 'photos'
 
-ALLOWED_USERS = [379415631])
+ALLOWED_USERS = [379415631]
 
 
 #Состояние диалога
