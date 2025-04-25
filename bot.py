@@ -14,9 +14,9 @@ PHOTO_DIR = 'photos'
 
 
 ALLOWED_USERS = []
-    for key, value in os.environ.items():
-        if key.startswith("user_"):
-            allowed_users.add(int(value))
+for key, value in os.environ.items():
+    if key.startswith("user_"):
+        ALLOWED_USERS.append(int(value))
 
 #Состояние диалога
 WAITING_FOR_NUMBER, WAITING_FOR_PHOTO = range(2)
