@@ -1,10 +1,14 @@
 import os
 import json
-import logging
 from functools import wraps
-from telegram import Update, ReplyKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
+from datetime import datetime
+from os import makedirs
+
+from telegram import Update, ForceReply, ReplyKeyboardMarkup
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler, \
+    CallbackContext
 from flask import Flask, request
+import logging
 
 # Инициализация логирования
 logging.basicConfig(level=logging.INFO)
@@ -174,11 +178,12 @@ async def handle_add_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # --- Настройка webhook и запуск Flask
 def main():
     print("main_start")
-    application = Application.builder().token(TOKEN).build()
+    TOKEN = os.getenv("BOT_TOKEN")  # ← вставь сюда токен
+    app = Application.builder().token(TOKEN).build()
 
-    application.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("start", start))
 
-    application.add_handler(MessageHandler(
+    app.add_handler(MessageHandler(
         filters.Regex("^(Какой номер сейчас ищем\\?|Последний номер|Все номера)$"),
         handle_buttons
     ))
@@ -191,23 +196,30 @@ def main():
         },
         fallbacks=[]
     )
-    application.add_handler(conv)
+    app.add_handler(conv)
 
     print("Бот запущен...")
 
     # Устанавливаем webhook
     webhook_url = os.getenv("WEBHOOK_URL")  # URL, на который Telegram будет отправлять обновления
-    application.bot.setWebhook(webhook_url)
+    app.bot.setWebhook(webhook_url)
 
-    # Прямо не запускаем polling, так как используем webhook
-    print("Webhook установлен, ожидаем обновлений.")
+    # Запускаем сервер
+    app.run_polling()  # Не запускаем polling, так как используем webhook
 
 # Обработка запросов от Telegram через webhook
 @app.route('/' + TOKEN, methods=['POST'])
 def webhook():
-    update = request.get_json()
-    print("Received update:", update) 
-    application.bot.process_new_updates([Update.de_json(update, application.bot)])
+    if request.content_type != 'application/json':
+        print(f"Unsupported content type: {request.content_type}")  # Логируем неверный тип контента
+        return 'Unsupported content type', 415
+    
+    update = request.get_json()  # Это распарсит JSON тело запроса
+    if update:
+        print(f"Received update: {update}")  # Логируем запрос
+        app.bot.process_new_updates([Update.de_json(update, app.bot)])
+    else:
+        print("No JSON data received.")
     return '', 200
 
 if __name__ == "__main__":
