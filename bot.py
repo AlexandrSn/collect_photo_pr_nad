@@ -182,6 +182,7 @@ async def handle_add_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # --- Запуск ---
 def main():
+    print("main_start")
     TOKEN = os.getenv("BOT_TOKEN")  # ← вставь сюда токен
     app = Application.builder().token(TOKEN).build()
 
