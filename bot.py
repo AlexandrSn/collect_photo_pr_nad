@@ -29,6 +29,9 @@ for key, value in os.environ.items():
         user_id = int(value)
         ALLOWED_USERS.append(user_id)
 
+print(TOKEN = os.getenv("BOT_TOKEN")][:5])
+print(ALLOWED_USERS)
+
 #Состояние диалога
 WAITING_FOR_NUMBER, WAITING_FOR_PHOTO = range(2)
 
