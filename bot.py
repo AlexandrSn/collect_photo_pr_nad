@@ -12,8 +12,11 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 DATA_FILE = 'db.json'
 PHOTO_DIR = 'photos'
 
-ALLOWED_USERS = [379415631]
 
+ALLOWED_USERS = set()
+    for key, value in os.environ.items():
+        if key.startswith("user_"):
+            allowed_users.add(int(value))
 
 #Состояние диалога
 WAITING_FOR_NUMBER, WAITING_FOR_PHOTO = range(2)
