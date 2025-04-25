@@ -7,7 +7,17 @@ from os import makedirs
 from telegram import Update, ForceReply, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler, \
     CallbackContext
+from flask import Flask
 
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "I'm alive!"  # Это отвечает на запросы от UptimeRobot
+
+
+    
 #Настройки
 DATA_FILE = 'db.json'
 PHOTO_DIR = 'photos'
@@ -192,6 +202,7 @@ def main():
     app.run_polling()
 
 if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)  # Render слушает на порту 8080
     main()
 
 
