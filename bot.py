@@ -13,7 +13,7 @@ DATA_FILE = 'db.json'
 PHOTO_DIR = 'photos'
 
 
-ALLOWED_USERS = set()
+ALLOWED_USERS = []
     for key, value in os.environ.items():
         if key.startswith("user_"):
             allowed_users.add(int(value))
