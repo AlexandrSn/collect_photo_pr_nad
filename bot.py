@@ -28,8 +28,9 @@ for key, value in os.environ.items():
     if key.startswith("user_"):
         user_id = int(value)
         ALLOWED_USERS.append(user_id)
-
-print(TOKEN = os.getenv("BOT_TOKEN")][:5])
+        
+TOKEN = os.getenv("BOT_TOKEN")]
+print(TOKEN[:5])
 print(ALLOWED_USERS)
 
 #Состояние диалога
