@@ -29,7 +29,7 @@ for key, value in os.environ.items():
         user_id = int(value)
         ALLOWED_USERS.append(user_id)
         
-TOKEN = os.getenv("BOT_TOKEN")]
+TOKEN = os.getenv("BOT_TOKEN")
 print(TOKEN[:5])
 print(ALLOWED_USERS)
 
