@@ -5,8 +5,7 @@ from datetime import datetime
 from os import makedirs
 
 from telegram import Update, ForceReply, ReplyKeyboardMarkup
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler, \
-    CallbackContext
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler, CallbackContext
 from flask import Flask, request
 import logging
 
@@ -93,7 +92,7 @@ def allowed_user_only(func):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"Привет! Это персональный бот для сбора. \n Сейчас нужен номер: {get_current_number():03d}",
-        reply_markup=MAIN_MENU
+        reply_markup = MAIN_MENU
     )
 
 @allowed_user_only
@@ -204,7 +203,8 @@ def main():
     webhook_url = os.getenv("WEBHOOK_URL")  # URL, на который Telegram будет отправлять обновления
     app.bot.setWebhook(webhook_url)
 
-    app.run_polling()  # Но в случае с Flask, мы используем webhook, так что эту строку не запускаем
+    # Запуск Flask приложения
+    app.run(host="0.0.0.0", port=8080)  # Render слушает на порту 8080
 
 # Обработка запросов от Telegram через webhook
 @app.route('/' + TOKEN, methods=['POST'])
@@ -215,4 +215,3 @@ def webhook():
 
 if __name__ == "__main__":
     main()
-    app.run(host="0.0.0.0", port=8080)  # Render слушает на порту 8080
