@@ -206,6 +206,7 @@ def main():
 @app.route('/' + TOKEN, methods=['POST'])
 def webhook():
     update = request.get_json()
+    print("Received update:", update) 
     application.bot.process_new_updates([Update.de_json(update, application.bot)])
     return '', 200
 
